@@ -13,7 +13,6 @@
 
 const appid = "amzn1.ask.skill.773968b1-1359-4506-80ce-4217a46dad68";
 
-
 // --------------- Helpers that build all of the responses -----------------------
 
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
@@ -51,7 +50,7 @@ function buildResponse(sessionAttributes, speechletResponse) {
 function getWelcomeResponse(callback) {
     // If we wanted to initialize the session to have some attributes we could add those here.
     const sessionAttributes = {};
-    const cardTitle = 'Welcome';
+    const cardTitle = 'StackSearch';
     const speechOutput = 'Welcome to StackSearch. ' +
         'What would you like to search on StackOverflow?';
     // If the user either does not reply to the welcome message or says something that is not
@@ -73,15 +72,6 @@ function handleSessionEndRequest(callback) {
 
     callback({}, buildSpeechletResponse(cardTitle, speechOutput, null, shouldEndSession));
 }
-
-function createFavoriteColorAttributes(favoriteColor) {
-    return {
-        favoriteColor,
-    };
-}
-/**
- * Sets the color in the session and prepares the speech to reply to the user.
- */
 
 /* Commenting out useless code, but keeping for basic usage
 function setColorInSession(intent, session, callback) {
@@ -162,10 +152,13 @@ function onIntent(intentRequest, session, callback) {
 
     const intent = intentRequest.intent;
     const intentName = intentRequest.intent.name;
+    const searchValue = intentRequest.intent.slots.stackquery.value;
 
-    // Dispatch to your skill's intent handlers
+    // Dispatch to your skill's intent handler
     if (intentName === 'Search') {
-       search(intent, session, callback);
+        // Logs search text.
+        console.log("user searched for " + searchValue);
+        search(intent, session, callback);
     } else if (intentName === 'AMAZON.HelpIntent') {
         getWelcomeResponse(callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
