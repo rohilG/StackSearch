@@ -12,7 +12,7 @@
 // Constants
 
 const aws = require('aws-sdk');
-const stackexhange = require('stackexchange');
+const stackexhange = require('stackexchange-node');
 const appid = "amzn1.ask.skill.773968b1-1359-4506-80ce-4217a46dad68";
 
 // --------------- Helpers that build all of the responses -----------------------
@@ -47,10 +47,6 @@ function buildResponse(sessionAttributes, speechletResponse) {
 }
 
 // --------------- Helpers for the skill's behaviour -----------------------
-
-function summarizeData(callback, string) {
-
-}
 
 // --------------- Functions that control the skill's behavior -----------------------
 
@@ -165,7 +161,7 @@ function onIntent(intentRequest, session, callback) {
     if (intentName === 'Search') {
         // Logs search text.
         console.log("user searched for " + searchValue);
-        search(intent, session, callback);
+        //search(intent, session, callback);
     } else if (intentName === 'AMAZON.HelpIntent') {
         getWelcomeResponse(callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
@@ -189,15 +185,11 @@ function onSessionEnded(sessionEndedRequest, session) {
 
 // Route the incoming request based on type (LaunchRequest, IntentRequest,
 // etc.) The JSON body of the request is provided in the event parameter.
+/*
 exports.handler = (event, context, callback) => {
     try {
         console.log(`event.session.application.applicationId=${event.session.application.applicationId}`);
 
-        /**
-         * Uncomment this if statement and populate with your skill's application ID to
-         * prevent someone else from configuring a skill that sends requests to this function.
-         */
-    
         if (event.session.application.applicationId !== appid) {
              callback('Invalid Application ID');
         }
@@ -226,3 +218,4 @@ exports.handler = (event, context, callback) => {
         callback(err);
     }
 };
+*/
