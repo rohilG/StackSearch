@@ -9,6 +9,10 @@
  * http://amzn.to/1LGWsLG
  */
 
+// Constants
+
+const appid = "amzn1.ask.skill.773968b1-1359-4506-80ce-4217a46dad68";
+
 
 // --------------- Helpers that build all of the responses -----------------------
 
@@ -48,12 +52,13 @@ function getWelcomeResponse(callback) {
     // If we wanted to initialize the session to have some attributes we could add those here.
     const sessionAttributes = {};
     const cardTitle = 'Welcome';
-    const speechOutput = 'Welcome to the Alexa Skills Kit sample. ' +
-        'Please tell me your favorite color by saying, my favorite color is red';
+    const speechOutput = 'Welcome to StackSearch. ' +
+        'What would you like to search on StackOverflow?';
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
-    const repromptText = 'Please tell me your favorite color by saying, ' +
-        'my favorite color is red';
+    const repromptText = 'Please tell me something you\'d like to search. ' +
+        'like how does the blockchain work?';
+
     const shouldEndSession = false;
 
     callback(sessionAttributes,
@@ -74,10 +79,11 @@ function createFavoriteColorAttributes(favoriteColor) {
         favoriteColor,
     };
 }
-
 /**
  * Sets the color in the session and prepares the speech to reply to the user.
  */
+
+/* Commenting out useless code, but keeping for basic usage
 function setColorInSession(intent, session, callback) {
     const cardTitle = intent.name;
     const favoriteColorSlot = intent.slots.Color;
@@ -158,10 +164,8 @@ function onIntent(intentRequest, session, callback) {
     const intentName = intentRequest.intent.name;
 
     // Dispatch to your skill's intent handlers
-    if (intentName === 'MyColorIsIntent') {
-        setColorInSession(intent, session, callback);
-    } else if (intentName === 'WhatsMyColorIntent') {
-        getColorFromSession(intent, session, callback);
+    if (intentName === 'Search') {
+       search(intent, session, callback);
     } else if (intentName === 'AMAZON.HelpIntent') {
         getWelcomeResponse(callback);
     } else if (intentName === 'AMAZON.StopIntent' || intentName === 'AMAZON.CancelIntent') {
@@ -193,11 +197,10 @@ exports.handler = (event, context, callback) => {
          * Uncomment this if statement and populate with your skill's application ID to
          * prevent someone else from configuring a skill that sends requests to this function.
          */
-        /*
-        if (event.session.application.applicationId !== 'amzn1.echo-sdk-ams.app.[unique-value-here]') {
+    
+        if (event.session.application.applicationId !== appid) {
              callback('Invalid Application ID');
         }
-        */
 
         if (event.session.new) {
             onSessionStarted({ requestId: event.request.requestId }, event.session);
