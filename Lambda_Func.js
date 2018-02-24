@@ -11,6 +11,8 @@
 
 // Constants
 
+const aws = require('aws-sdk');
+const stackexhange = require('stackexchange');
 const appid = "amzn1.ask.skill.773968b1-1359-4506-80ce-4217a46dad68";
 
 // --------------- Helpers that build all of the responses -----------------------
@@ -44,6 +46,11 @@ function buildResponse(sessionAttributes, speechletResponse) {
     };
 }
 
+// --------------- Helpers for the skill's behaviour -----------------------
+
+function summarizeData(callback, string) {
+
+}
 
 // --------------- Functions that control the skill's behavior -----------------------
 
